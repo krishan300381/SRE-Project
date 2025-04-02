@@ -4,10 +4,42 @@
 
 body {
     background-color: white;  /* Light gray */
-    background-image: url('./images/image.png'); /* Optional */
+    /* background-image: url('./images/image.png'); Optional */
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     margin: 0;
     padding: 0;
+  }
+  @keyframes marquee {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
+}
+
+/* Apply scrolling only when text overflows */
+.will-scroll {
+    display: inline-block;
+    white-space: nowrap;
+    max-width: 100%; /* Ensure it respects the parent size */
+    overflow: hidden;
+}
+
+/* Enable animation only if content is wider than the cell */
+.will-scroll::after {
+    content: attr(data-text); /* Duplicate content for smooth scrolling */
+    padding-left: 1rem; /* Space between loops */
+    display: inline-block;
+}
+
+@media (min-width: 1px) { /* Applies only if content exceeds parent */
+    .will-scroll:has(span) {
+        animation: marquee 5s linear infinite;
+    }
+}
+
+
+  .animate-marquee {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 10s linear infinite; /* Adjust speed as needed */
   }

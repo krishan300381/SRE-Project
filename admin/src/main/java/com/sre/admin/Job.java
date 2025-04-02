@@ -15,6 +15,8 @@ public class Job{
     private String department;
     private int vac_num;
     private String newstag;
+    private String ac_date;
+    private String re_date;
     private List<String> postKey;//t3
     private List<String> posts;//t4
     private List<String> linkKey;//5

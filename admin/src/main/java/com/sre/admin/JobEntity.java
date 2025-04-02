@@ -15,40 +15,42 @@ public class JobEntity {
     private String department;
     private int vac_num;
     private String newstag;
+    private String ac_date;
+    private String re_date;
 
     @ElementCollection
     @CollectionTable(name = "job_post_keys", joinColumns = @JoinColumn(name = "job_id"))
     @Column(name = "post_key")
-    @OrderColumn(name = "order_index") // ✅ Ensures order is preserved
+    @OrderColumn(name = "order_index") 
     private List<String> postKey;
 
     @ElementCollection
     @CollectionTable(name = "job_posts", joinColumns = @JoinColumn(name = "job_id"))
     @Column(name = "post")
-    @OrderColumn(name = "order_index") // ✅ Ensures order is preserved
+    @OrderColumn(name = "order_index") 
     private List<String> posts;
 
     @ElementCollection
     @CollectionTable(name = "job_link_keys", joinColumns = @JoinColumn(name = "job_id"))
     @Column(name = "link_key")
-    @OrderColumn(name = "order_index") // ✅ Ensures order is preserved
+    @OrderColumn(name = "order_index") 
     private List<String> linkKey;
 
     @ElementCollection
     @CollectionTable(name = "job_links", joinColumns = @JoinColumn(name = "job_id"))
     @Column(name = "link")
-    @OrderColumn(name = "order_index") // ✅ Ensures order is preserved
+    @OrderColumn(name = "order_index") 
     private List<String> links;
 
     @ElementCollection
     @CollectionTable(name = "job_date_keys", joinColumns = @JoinColumn(name = "job_id"))
     @Column(name = "date_key")
-    @OrderColumn(name = "order_index") // ✅ Ensures order is preserved
+    @OrderColumn(name = "order_index") 
     private List<String> dateKey;
 
     @ElementCollection
     @CollectionTable(name = "job_dates", joinColumns = @JoinColumn(name = "job_id"))
     @Column(name = "date")
-    @OrderColumn(name = "order_index") // ✅ Ensures order is preserved
+    @OrderColumn(name = "order_index") 
     private List<String> dates;
 }

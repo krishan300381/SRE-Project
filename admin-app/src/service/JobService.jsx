@@ -19,6 +19,7 @@ class JobService {
         return axios.delete(`${API_URL}/${id}`);
     }
     updateJob(id,job) {
+        console.log("Sending data to API:", id, job);  // Debugging
         return axios.put(`${API_URL}/${id}`, job);
     }
 }

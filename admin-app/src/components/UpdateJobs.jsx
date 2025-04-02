@@ -4,14 +4,15 @@ import JobService from "../service/JobService";
 
 const UpdateJob = () => {
   const { id } = useParams();
-  const jobId = Number(id); // Ensure jobId is a valid number
+  const jobId = Number(id);
   const navigate = useNavigate();
 
-  // Job state
   const [job, setJob] = useState({
     department: "",
     vac_num: 0,
     newstag: "",
+    ac_date: "Null",
+    re_date: "Null",
     postKey: [],
     posts: [],
     linkKey: [],
@@ -20,9 +21,8 @@ const UpdateJob = () => {
     dates: [],
   });
 
-  // Fetch job data when component mounts
   useEffect(() => {
-    if (!jobId) return; // Prevent fetching if jobId is NaN
+    if (!jobId) return;
 
     JobService.getJobById(jobId)
       .then((response) => {
@@ -32,41 +32,41 @@ const UpdateJob = () => {
       .catch((error) => console.error("Error fetching job:", error));
   }, [jobId]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Handle array inputs correctly
-    if (["postKey", "posts", "linkKey", "links", "dateKey", "dates"].includes(name)) {
-      setJob((prevJob) => ({
+    setJob((prevJob) => ({
         ...prevJob,
-        [name]: value.split(",").map((item) => item.trim()), // Convert comma-separated input to an array
-      }));
-    } else {
-      setJob((prevJob) => ({
-        ...prevJob,
-        [name]: value,
-      }));
-    }
-  };
+        [name]: name.includes("Key") || name === "posts" || name === "links" || name === "dates"
+            ? value.split(",").map((v) => v.trim()) // Convert comma-separated values into an array
+            : value
+    }));
 
-  // Update job function
-  const updateJob = (e) => {
-    e.preventDefault();
+    console.log(`Updated ${name}:`, value);  // Debugging
+};
 
-    JobService.updateJob(jobId, job)
-      .then(() => {
-        console.log("Job updated successfully:", job);
-        navigate("/");
-      })
-      .catch((error) => console.error("Error updating job:", error));
-  };
+
+
+
+const updateJob = async (e) => {
+  e.preventDefault();
+
+  console.log("Final Job Data Before API Call:", job); // Debugging
+
+  try {
+      await JobService.updateJob(jobId, job);
+      console.log("Job updated successfully:", job);
+      navigate("/");
+  } catch (error) {
+      console.error("Error updating job:", error);
+  }
+};
+
 
   return (
-    <div className="max-w-xl mx-auto bg-slate-800 my-20 rounded shadow py-6 px-8">
+    <div className="max-w-xl mx-auto bg-gradient-to-r from-slate-600 to-blue-900 my-20 rounded shadow py-6 px-8">
       <h2 className="text-4xl font-bold text-center py-4 text-white">Update Job</h2>
-
-      {/* Department */}
+      <lable className="text-white">Department:</lable>
       <input
         type="text"
         name="department"
@@ -75,8 +75,7 @@ const UpdateJob = () => {
         placeholder="Department"
         className="w-full py-2 my-2 text-slate-800"
       />
-
-      {/* Vacancy Number */}
+      <lable className="text-white">Total Vacancy:</lable>
       <input
         type="number"
         name="vac_num"
@@ -85,8 +84,7 @@ const UpdateJob = () => {
         placeholder="Vacancy Number"
         className="w-full py-2 my-2 text-slate-800"
       />
-
-      {/* News Tag */}
+      <lable className="text-white">News_Tag:</lable>
       <input
         type="text"
         name="newstag"
@@ -95,8 +93,27 @@ const UpdateJob = () => {
         placeholder="News Tag"
         className="w-full py-2 my-2 text-slate-800"
       />
+      <lable className="text-white">Admit-card Date yyyymmdd:</lable>
+      <input
+        type="text"
+        name="ac_date"
+        value={job.ac_date || ""}
+        onChange={handleChange}
+        placeholder="admit card date"
+        className="w-full py-2 my-2 text-slate-800"
+      />
 
-      {/* Array Fields */}
+      <lable className="text-white">Result Date yyyymmdd:</lable>
+      <input
+          type="text"
+          name="re_date"
+          value={job.re_date || ""}
+          onChange={handleChange}
+          placeholder="Result Date"
+          className="w-full py-2 my-2 text-slate-800"
+      />
+
+      <lable className="text-white">Post Details:key array</lable>
       <input
         type="text"
         name="postKey"
@@ -105,7 +122,7 @@ const UpdateJob = () => {
         placeholder="Post Keys (comma-separated)"
         className="w-full py-2 my-2 text-slate-800"
       />
-
+      <lable className="text-white">:post num array:</lable>
       <input
         type="text"
         name="posts"
@@ -114,7 +131,7 @@ const UpdateJob = () => {
         placeholder="Posts (comma-separated)"
         className="w-full py-2 my-2 text-slate-800"
       />
-
+      <lable className="text-white">link :key array</lable>
       <input
         type="text"
         name="linkKey"
@@ -123,7 +140,7 @@ const UpdateJob = () => {
         placeholder="Link Keys (comma-separated)"
         className="w-full py-2 my-2 text-slate-800"
       />
-
+      <lable className="text-white">link text :links array</lable>
       <input
         type="text"
         name="links"
@@ -132,7 +149,7 @@ const UpdateJob = () => {
         placeholder="Links (comma-separated)"
         className="w-full py-2 my-2 text-slate-800"
       />
-
+      <lable className="text-white">Extra dates:key array</lable>
       <input
         type="text"
         name="dateKey"
@@ -141,7 +158,7 @@ const UpdateJob = () => {
         placeholder="Date Keys (comma-separated)"
         className="w-full py-2 my-2 text-slate-800"
       />
-
+      <lable className="text-white">extra dates: array</lable>
       <input
         type="text"
         name="dates"
@@ -151,6 +168,11 @@ const UpdateJob = () => {
         className="w-full py-2 my-2 text-slate-800"
       />
 
+      
+
+      {/* Snippet Button */}
+      
+
       {/* Action Buttons */}
       <div className="flex justify-center gap-4 mt-4">
         <button
@@ -159,7 +181,6 @@ const UpdateJob = () => {
         >
           Update
         </button>
-
         <button
           onClick={() => navigate("/")}
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded"

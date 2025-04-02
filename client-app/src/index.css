@@ -1,0 +1,14 @@
+@import "tailwindcss";
+/* @tailwind base; */
+/* @tailwind components; */
+/* @tailwind utilities; */
+
+body {
+    background-color: white;  /* Light gray */
+    /* background-image: url('./images/image.png'); Optional */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+  }

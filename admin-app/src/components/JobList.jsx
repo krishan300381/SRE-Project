@@ -16,65 +16,61 @@ const JobList = () => {
     }, []);
 
     return (
-        <div className='max-w-4xl mx-auto my-1'>
-            <h2 className='text-4xl font-bold text-center my-4'>Job List</h2>
-
-            {/* <button
-                onClick={() => navigate('/AddJob')}
-                className='bg-green-500 text-white px-4 py-2 rounded'
-            > Add Job </button> */}
-
-            <table className=" w-full border-collapse w-1\/2 text-center bg-white shadow-lg rounded-lg overflow-hidden">
-                <thead className=' text-blue-600'>
-                    <tr className='bg-gray-200'>
-                        <th className=' border-gray-400 p-2'>Department</th>
-                        <th className=' border-gray-400 p-2'>Vacancies</th>
-                        <th className=' border-gray-400 p-2'>News Tag</th>
-                        <th className=' border-gray-400 p-2'>Actions</th><br />
-                    </tr>
-                </thead>
-                <tbody>
-  {/* Debugging log to check the structure of jobs */}
-  {console.log("Jobs data:", jobs)}
-
-  {jobs.map((job, index) => {
-    // Ensure job ID is correctly retrieved
-    const jobId = job?.id; // Using optional chaining to avoid errors if job is undefined
-
-    return (
-      <tr key={jobId || `job-${index}`} className='border-b border-gray-400 text-center'>
-        <td class=" border-gray-400 p-2">{job.department}</td>
-        <td class=" border-gray-400 p-2">{job.vac_num}</td>
-        <td class=" border-gray-400 p-2">{job.newstag}</td>
-        <td class=" border-gray-400 p-2">
-          <button
-            onClick={() => {
-              console.log("Navigating to:", `/editJob/${jobId}`); // Debugging log
-              navigate(`/editJob/${jobId}`);
-            }}
-            className="bg-blue-500 text-white px-2 py-1 rounded"
-          >
-            Edit
-          </button>
-
-          <button
-            onClick={() =>
-              JobService.deleteJob(jobId).then(() =>
-                setJobs(jobs.filter((j) => j.id !== jobId))
-              )
-            }
-            className="bg-red-500 text-white px-2 py-1 rounded ml-2"
-          >
-            Delete
-          </button>
-        </td>
-      </tr>
-    );
-  })}
-</tbody>
-
-            </table>
-        </div>
+      <div className="flex justify-center my-4 ">
+      <div className="w-full max-w-5xl mx-3">
+        <h2 className="text-3xl font-bold text-center my-4">Job List</h2>
+    
+        <table className="w-full max-w-5xl border-collapse bg-white shadow-lg rounded-lg overflow-hidden text-center -mx-20">
+          <thead className="text-xl">
+            <tr className="bg-gradient-to-r from-slate-500 to-blue-500 text-white">
+              <th className="border-gray-400 p-2">Department</th>
+              <th className="border-gray-400 p-2">Vacancies</th>
+              <th className="border-gray-400 p-2">News Tag</th>
+              <th className="w-full text-center border-gray-400 p-5">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {jobs.map((job, index) => {
+              const jobId = job?.id;
+    
+              return (
+                <tr key={jobId || `job-${index}`} className="bg-gradient-to-r from-slate-600 to-blue-900 text-white border-b border-gray-400 text-center">
+                  <td className="w-1 border-gray-400 p-2 whitespace-nowrap overflow-hidden">
+                    <div className="inline-block">{job.department}</div>
+                  </td>
+                  <td className="border-gray-400 p-2">{job.vac_num}</td>
+                  <td className="w-1 border-gray-400 p-2 whitespace-nowrap overflow-hidden">
+                    <div className="inline-block">{job.newstag}</div>
+                  </td>
+                  <td className="w-full border-gray-400 p-2">
+                    <div className="flex justify-center gap-2">
+                      <button
+                        onClick={() => navigate(`/editJob/${jobId}`)}
+                        className="bg-blue-500 text-white px-2 py-1 rounded"
+                      >
+                        Update
+                      </button>
+    
+                      <button
+                        onClick={() =>
+                          JobService.deleteJob(jobId).then(() =>
+                            setJobs(jobs.filter((j) => j.id !== jobId))
+                          )
+                        }
+                        className="bg-red-500 text-white px-2 py-1 rounded"
+                      >
+                        Delete!
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
         
     );
 };

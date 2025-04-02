@@ -44,6 +44,8 @@ public List<Job> readJobs() {
         
         job.setId(jobEntity.getId());  // Set the actual ID from the database
         job.setDepartment(jobEntity.getDepartment());
+        job.setAc_date(jobEntity.getAc_date());
+        job.setRe_date(jobEntity.getRe_date());
         job.setVac_num(jobEntity.getVac_num());
         job.setNewstag(jobEntity.getNewstag());
         job.setPostKey(jobEntity.getPostKey());
@@ -78,6 +80,12 @@ public List<Job> readJobs() {
             if (jobUpdate.getDepartment() != null) {
                 jobEntity.setDepartment(jobUpdate.getDepartment());
             }
+            if (jobUpdate.getAc_date() != null) {
+                jobEntity.setAc_date(jobUpdate.getAc_date()); // ✅ Correct
+            }
+            if (jobUpdate.getRe_date() != null) {
+                jobEntity.setRe_date(jobUpdate.getRe_date()); // ✅ Correct
+            }            
             if (jobUpdate.getVac_num() != 0) { // Assuming 0 means no update
                 jobEntity.setVac_num(jobUpdate.getVac_num());
             }
